@@ -4,8 +4,8 @@ const form = document.getElementById("record-form");
 const listElement = document.getElementById("record-list");
 const messageElement = document.getElementById("message");
 
-let records = loadRecord();
-renderRecord();
+let records = loadRecords();
+renderRecords();
 setDefaultDate();
 
 form.addEventListener("submit", function handleSubmit(event) {
