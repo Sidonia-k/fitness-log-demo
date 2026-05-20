@@ -5,7 +5,7 @@ const listElement = document.getElementById("record-list");
 const messageElement = document.getElementById("message");
 
 let records = loadRecords();
-renderRecords();
+renderRecord();
 setDefaultDate();
 
 form.addEventListener("submit", function handleSubmit(event) {
