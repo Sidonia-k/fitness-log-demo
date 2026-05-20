@@ -4,7 +4,7 @@ const form = document.getElementById("record-form");
 const listElement = document.getElementById("record-list");
 const messageElement = document.getElementById("message");
 
-let records = loadRecords();
+let records = loadRecord();
 renderRecord();
 setDefaultDate();
 
