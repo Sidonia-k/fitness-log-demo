@@ -69,6 +69,7 @@ function renderRecords() {
 
   const itemsHtml = records
     .map(function (record) {
+      const status = getRecordStatus(record);
       return `
         <li class="record-item">
           <p><strong>日期：</strong>${record.date}</p>
@@ -76,12 +77,33 @@ function renderRecords() {
           <p><strong>腰围：</strong>${record.waist} cm</p>
           <p><strong>热量：</strong>${record.calories} kcal</p>
           <p><strong>蛋白质：</strong>${record.protein} g</p>
+          <p><strong>状态判断：</strong>${status}</p>
         </li>
       `;
     })
     .join("");
 
   listElement.innerHTML = itemsHtml;
+}
+
+function getRecordStatus(record) {
+  if (record.protein < 120) {
+    return "蛋白质偏低";
+  }
+
+  if (record.calories > 2400) {
+    return "热量偏高";
+  }
+
+  if (
+    record.calories >= 2000 &&
+    record.calories <= 2400 &&
+    record.protein >= 120
+  ) {
+    return "比较理想";
+  }
+
+  return "继续观察";
 }
 
 function showMessage(text, type) {
