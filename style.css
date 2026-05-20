@@ -81,6 +81,13 @@ input {
   color: #b91c1c;
 }
 
+
+.average-summary {
+  margin: 0 0 12px;
+  color: #334155;
+  font-size: 14px;
+}
+
 .record-list {
   list-style: none;
   margin: 0;

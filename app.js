@@ -3,6 +3,7 @@ const STORAGE_KEY = "fitness_records_v1";
 const form = document.getElementById("record-form");
 const listElement = document.getElementById("record-list");
 const messageElement = document.getElementById("message");
+const averageElement = document.getElementById("average-summary");
 
 let records = loadRecords();
 renderRecords();
@@ -62,6 +63,8 @@ function saveRecords(data) {
 }
 
 function renderRecords() {
+  renderAverages();
+
   if (records.length === 0) {
     listElement.innerHTML = '<li class="empty-text">暂无历史记录。</li>';
     return;
@@ -84,6 +87,50 @@ function renderRecords() {
     .join("");
 
   listElement.innerHTML = itemsHtml;
+}
+
+function renderAverages() {
+  if (!averageElement) {
+    return;
+  }
+
+  if (records.length === 0) {
+    averageElement.textContent = "平均值：暂无数据";
+    return;
+  }
+
+  const averages = calculateAverages(records);
+  averageElement.textContent =
+    `平均值（${records.length} 条）：` +
+    `体重 ${formatNumber(averages.weight)} kg，` +
+    `腰围 ${formatNumber(averages.waist)} cm，` +
+    `热量 ${formatNumber(averages.calories)} kcal，` +
+    `蛋白质 ${formatNumber(averages.protein)} g`;
+}
+
+function calculateAverages(data) {
+  const totals = data.reduce(
+    function (accumulator, record) {
+      accumulator.weight += record.weight;
+      accumulator.waist += record.waist;
+      accumulator.calories += record.calories;
+      accumulator.protein += record.protein;
+      return accumulator;
+    },
+    { weight: 0, waist: 0, calories: 0, protein: 0 }
+  );
+
+  const count = data.length;
+  return {
+    weight: totals.weight / count,
+    waist: totals.waist / count,
+    calories: totals.calories / count,
+    protein: totals.protein / count,
+  };
+}
+
+function formatNumber(value) {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
 }
 
 function getRecordStatus(record) {
